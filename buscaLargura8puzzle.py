@@ -78,16 +78,6 @@ def bfs(puzzle):
 	movedown = moveToDown(puzzle)
 	movetop = moveToTop(puzzle)
 
-	#print "Move Direita"
-	#print movedir
-	#print "Move Esquerda"
-	#print moveesq
-	#print "Move Cima"
-	#print movetop
-	#print "Move Biaxo"
-	#print movedown
-	#print "-----------"
-
 	if(verificArrayIqual(estado,movedir) == False):
 		estado.append(movedir)
 	if(verificArrayIqual(estado,movetop) == False):
@@ -97,7 +87,7 @@ def bfs(puzzle):
 	if(verificArrayIqual(estado,movedown) == False):
 		estado.append(movedown)
 
-	#printArray(estados)
+
 
 
 
