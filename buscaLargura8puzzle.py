@@ -1,27 +1,33 @@
 import numpy  as np 
 import copy
 
-meta = np.array(range(9)).reshape((3,3))
-meta2 = np.array(range(9)).reshape((3,3))
+meta = np.array(range(9)).reshape((3,3)) #gerando matriz meta 3x3
+meta2 = np.array(range(9)).reshape((3,3)) #gerando matriz de teste
 
+#array de estados da matriz
 estado = []
 
+#checando se uma matriz e igual a matriz a meta
 def check(puzzle,meta): return np.array_equal(puzzle,meta)
 
+#verificar se tem elemento repetido na array
 def verificArrayIqual(estados,meta):
 	for i in estados:
 		if(check(i,meta) == True):
 			return True
 	return False
 
+#retorna o estado aleatorio da matriz (Estado Inicial do jogo)
 def getPuzzle():
 	puzzle = np.array(range(9))
 	np.random.shuffle(puzzle)
 	puzzle = puzzle.reshape((3,3))
 	return puzzle 
 
+#busca o indices do buraco da matriz
 def searchZero(puzzle): return [(i,j) for i in range(3) for j in range(3) if puzzle[i][j] == 0][0]
 
+#movendo buraco a esquerda
 def moveToLeft(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -33,6 +39,7 @@ def moveToLeft(puzzle):
 	else:
 		return puzzle.copy()
 
+#movendo    buraco a direita
 def moveToRigth(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -44,6 +51,7 @@ def moveToRigth(puzzle):
 	else:
 		return puzzle.copy()
 
+#movendo buraco pra cima
 def moveToTop(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -55,6 +63,7 @@ def moveToTop(puzzle):
 	else:
 		return puzzle.copy()
 
+#movendo buraco pra baixo
 def moveToDown(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -66,12 +75,14 @@ def moveToDown(puzzle):
 	else:
 		return puzzle.copy()
 
+#listando um vector de matriz
 def printArray(arr):
 	print "mostrando estados \n"
 	for row in arr:
 		print row
 
 
+#funcao de buscar em largura
 def bfs(puzzle):
 	movedir = moveToLeft(puzzle)
 	moveesq = moveToRigth(puzzle)   
@@ -92,6 +103,8 @@ def bfs(puzzle):
 
 
 #mini = [[1,2,3],[4,5,0],[6,7,8]]
+
+#matriz inicial para testes
  
 meta2[0][0] = 1
 meta2[0][1] = 2
@@ -104,7 +117,7 @@ meta2[2][1] = 7
 meta2[2][2] = 8
 
 
-
+#add matriz inical ao array de estados da matriz
 estado.append(meta2)
 
 print " Estado inicial"
@@ -112,7 +125,9 @@ print estado[0]
 print "-------------"
 cont = 0
 
+#verifica se estado atual (matriz atual) e a meta
 while check(estado[cont],meta) != True:
+	#chama a funcao que expande a matriz realizando os movimento
 	bfs(copy.deepcopy(estado[cont]))
 	cont = cont + 1
 	if (cont % 1000 == 0):

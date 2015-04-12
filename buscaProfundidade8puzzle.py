@@ -1,10 +1,12 @@
 import numpy  as np 
 import copy
 
-meta = np.array(range(9)).reshape((3,3))
-meta2 = np.array(range(9)).reshape((3,3))
+meta = np.array(range(9)).reshape((3,3)) #gerando matriz meta 3x3
+meta2 = np.array(range(9)).reshape((3,3))  #gerando matriz de teste
 
+#array de estados da matriz
 estado = []
+#array de estados visitados da matriz
 estadoV = []
 
 meta2[0][0] = 1
@@ -28,29 +30,34 @@ meta2[2][0] = 6
 meta2[2][1] = 7
 meta2[2][2] = 8
 """
-
+#checando se uma matriz e igual a matriz a meta
 def check(puzzle,meta): return np.array_equal(puzzle,meta)
 
+#verificar se tem elemento repetido na array
 def verificArrayIqual(estados,meta):
 	for i in estados:
 		if(check(i,meta) == True):
 			return True
 	return False
 
+#verificar se matriz atual ja foi visitada
 def checkVisit(estadosVisitados,meta):
 	for i in estadosVisitados:
 		if(check(i,meta) == True):
 			return True
 	return False
 
+#retorna o estado aleatorio da matriz (Estado Inicial do jogo)
 def getPuzzle():
 	puzzle = np.array(range(9))
 	np.random.shuffle(puzzle)
 	puzzle = puzzle.reshape((3,3))
 	return puzzle 
 
+#busca o indices do buraco da matriz
 def searchZero(puzzle): return [(i,j) for i in range(3) for j in range(3) if puzzle[i][j] == 0][0]
 
+#movendo buraco a esquerda
 def moveToLeft(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -62,6 +69,7 @@ def moveToLeft(puzzle):
 	else:
 		return puzzle.copy()
 
+#movendo    buraco a direita
 def moveToRigth(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -73,6 +81,7 @@ def moveToRigth(puzzle):
 	else:
 		return puzzle.copy()
 
+#movendo buraco pra cima
 def moveToTop(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -84,6 +93,7 @@ def moveToTop(puzzle):
 	else:
 		return puzzle.copy()
 
+#movendo buraco pra baixo
 def moveToDown(puzzle):
 
 	i , j = searchZero(puzzle)
@@ -95,12 +105,13 @@ def moveToDown(puzzle):
 	else:
 		return puzzle.copy()
 
+#listando um vector de matriz
 def printArray(arr):
 	print "mostrando estados \n"
 	for row in arr:
 		print row
 
-
+#funcao de buscar em profundidade
 def bfs(puzzle):
 
 	moveesq = moveToLeft(puzzle) 	 
@@ -120,11 +131,13 @@ def bfs(puzzle):
 
 
 
-
+#add matriz inical ao array de estados da matriz
 estado.append(meta2)
 cont =0
+#verifica se estado atual (matriz atual) e a meta
 while check(estado[len(estado)-1],meta) != True:
 #for x in range(4):	
+	#verifica se estado atual da matriz ja foi visitado
 	while(checkVisit(estadoV,estado[len(estado)-1]) == True):
 		print "Entrou no checkVisit hahahaha:"
 		v = estado.pop()
@@ -135,6 +148,7 @@ while check(estado[len(estado)-1],meta) != True:
 	print "estado de Entrada"
 	print estadoAtual
 	print "----------------"
+	#chama a funcao que expande a matriz realizado os movimento
 	bfs(estadoAtual)
 	if(cont == 0):
 		del estado[0]	
