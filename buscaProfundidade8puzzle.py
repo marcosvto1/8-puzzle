@@ -7,6 +7,28 @@ meta2 = np.array(range(9)).reshape((3,3))
 estado = []
 estadoV = []
 
+meta2[0][0] = 1
+meta2[0][1] = 2
+meta2[0][2] = 3
+meta2[1][0] = 4
+meta2[1][1] = 5
+meta2[1][2] = 0
+meta2[2][0] = 6
+meta2[2][1] = 7
+meta2[2][2] = 8
+
+"""
+meta2[0][0] = 1
+meta2[0][1] = 0
+meta2[0][2] = 2
+meta2[1][0] = 3
+meta2[1][1] = 4
+meta2[1][2] = 5
+meta2[2][0] = 6
+meta2[2][1] = 7
+meta2[2][2] = 8
+"""
+
 def check(puzzle,meta): return np.array_equal(puzzle,meta)
 
 def verificArrayIqual(estados,meta):
@@ -99,31 +121,6 @@ def bfs(puzzle):
 
 
 
-#mini = [[1,2,3],[4,5,0],[6,7,8]]
-
-meta2[0][0] = 1
-meta2[0][1] = 2
-meta2[0][2] = 3
-meta2[1][0] = 4
-meta2[1][1] = 5
-meta2[1][2] = 0
-meta2[2][0] = 6
-meta2[2][1] = 7
-meta2[2][2] = 8
-
-"""
-meta2[0][0] = 1
-meta2[0][1] = 0
-meta2[0][2] = 2
-meta2[1][0] = 3
-meta2[1][1] = 4
-meta2[1][2] = 5
-meta2[2][0] = 6
-meta2[2][1] = 7
-meta2[2][2] = 8
-"""
-
-
 estado.append(meta2)
 cont =0
 while check(estado[len(estado)-1],meta) != True:
@@ -132,10 +129,8 @@ while check(estado[len(estado)-1],meta) != True:
 		print "Entrou no checkVisit hahahaha:"
 		v = estado.pop()
 		print v
-	#print "ta fora"
+
 	estadoAtual = estado.pop()
-	#print "teste 1"
-	#printArray(estado)
 	estadoV.append(estadoAtual)
 	print "estado de Entrada"
 	print estadoAtual
@@ -143,7 +138,6 @@ while check(estado[len(estado)-1],meta) != True:
 	bfs(estadoAtual)
 	if(cont == 0):
 		del estado[0]	
-	#del estado[0]
 	print "Estados Visitados"
 	printArray(estadoV)
 	print "---------\nEstados"
