@@ -1,4 +1,5 @@
-import numpy  as np 
+import numpy  as np
+from os import system
 import copy
 
 meta = np.array(range(9)).reshape((3,3)) #gerando matriz meta 3x3
@@ -119,44 +120,50 @@ def bfs(puzzle):
 	movetop = moveToTop(puzzle)
 	movedir = moveToRigth(puzzle)	
 
-
-	if(verificArrayIqual(estado,movedir) == False):
-		estado.append(movedir)
+	if(verificArrayIqual(estado,moveesq) == False):
+		estado.append(moveesq)
 	if(verificArrayIqual(estado,movetop) == False):
 		estado.append(movetop)		
 	if (verificArrayIqual(estado,movedown)== False):
-		estado.append(movedown)	
-	if(verificArrayIqual(estado,moveesq) == False):
-		estado.append(moveesq)
+		estado.append(movedown)
+	if(verificArrayIqual(estado,movedir) == False):
+		estado.append(movedir)
+
 
 
 
 #add matriz inical ao array de estados da matriz
 estado.append(meta2)
 cont =0
+qtdI = 0
 #verifica se estado atual (matriz atual) e a meta
 while check(estado[len(estado)-1],meta) != True:
-#for x in range(4):	
+#for x in range(10):	
 	#verifica se estado atual da matriz ja foi visitado
 	while(checkVisit(estadoV,estado[len(estado)-1]) == True):
-		print "Entrou no checkVisit hahahaha:"
+		#print "Entrou no checkVisit hahahaha:"
 		v = estado.pop()
-		print v
+		#print v
 
 	estadoAtual = estado.pop()
 	estadoV.append(estadoAtual)
-	print "estado de Entrada"
+	#print "estado de Entrada"
+	system("clear")
 	print estadoAtual
-	print "----------------"
+	#print "----------------"
 	#chama a funcao que expande a matriz realizado os movimento
 	bfs(estadoAtual)
 	if(cont == 0):
 		del estado[0]	
-	print "Estados Visitados"
-	printArray(estadoV)
-	print "---------\nEstados"
-	printArray(estado)
+	#print "Estados Visitados"
+	#printArray(estadoV)
+	#print "---------\nEstados"
+	#printArray(estado)
 	cont = cont + 1
+	qtdI = qtdI + 1
+	if (qtdI % 1000 == 0):
+		print qtdI	
+
 #fim
 
 print "Final"
